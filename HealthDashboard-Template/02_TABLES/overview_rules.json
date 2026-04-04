@@ -1,0 +1,23 @@
+{
+  "_comment": "Rules for which markers appear on the overview tab and how they are displayed",
+  "overview_markers": [
+    {
+      "test_name": "Гемоглобин",
+      "display_name": "Гемоглобин",
+      "category": "Кровь",
+      "priority": 1
+    },
+    {
+      "test_name": "Глюкоза",
+      "display_name": "Глюкоза",
+      "category": "Метаболизм",
+      "priority": 2
+    },
+    {
+      "test_name": "ТТГ (TSH)",
+      "display_name": "ТТГ",
+      "category": "Гормоны",
+      "priority": 3
+    }
+  ]
+}

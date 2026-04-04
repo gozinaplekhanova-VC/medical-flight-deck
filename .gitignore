@@ -1,0 +1,61 @@
+# ══════════════════════════════════════════════════
+# Personal medical data — NEVER commit
+# ══════════════════════════════════════════════════
+
+# Raw and sorted medical documents (PDFs with patient data)
+00_INBOX_RAW/
+01_SORTED/
+
+# Extracted lab data (contains real test results)
+02_TABLES/*.csv
+02_TABLES/*.vcf
+!02_TABLES/.gitkeep
+
+# Keep config files (no personal data)
+!02_TABLES/tab_mapping.json
+!02_TABLES/overview_rules.json
+!02_TABLES/category_mapping.csv
+
+# Agent reports and summaries (contain medical analysis)
+03_AGENT_REPORTS/
+04_ADVISOR_SUMMARY/
+
+# Dashboard with embedded personal data
+05_SITE/index.html
+05_SITE/timeline.json
+05_SITE/index_backup_*.html
+05_SITE/test.html
+!05_SITE/.gitkeep
+
+# Medical history (highly sensitive)
+06_MEDICAL_HISTORY/
+
+# Lifestyle data (mood, supplements)
+07_LIFESTYLE_DATA/
+
+# Nutrition data (personal diet, symptoms)
+08_NUTRITION/food_diary.csv
+08_NUTRITION/symptoms_diary.csv
+08_NUTRITION/food_profile.csv
+08_NUTRITION/food_ingredients.csv
+08_NUTRITION/plans/
+08_NUTRITION/logs/
+08_NUTRITION/requests/2025-*
+08_NUTRITION/requests/2026-*
+
+# Complaint files (personal symptoms)
+CLAUDE/prompts/complaints/2025-*
+CLAUDE/prompts/complaints/2026-*
+
+# ══════════════════════════════════════════════════
+# System and IDE files
+# ══════════════════════════════════════════════════
+.DS_Store
+.claude/settings.local.json
+.auto-memory/
+__pycache__/
+*.pyc
+.env
+.venv/
+node_modules/
+*.log

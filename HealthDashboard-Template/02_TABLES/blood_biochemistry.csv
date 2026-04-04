@@ -1,0 +1,5 @@
+date,test_name,value,unit,reference_min,reference_max,status,source_file
+2025-01-15,Глюкоза,5.1,ммоль/л,3.9,6.1,normal,example_biochem.pdf
+2025-01-15,Холестерин общий,5.8,ммоль/л,3.0,5.2,high,example_biochem.pdf
+2025-01-15,Креатинин,72,мкмоль/л,53,97,normal,example_biochem.pdf
+2025-01-15,АЛТ,18,Ед/л,0,35,normal,example_biochem.pdf

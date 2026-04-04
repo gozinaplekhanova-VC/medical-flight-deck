@@ -1,0 +1,15 @@
+# PDF processing
+PyMuPDF>=1.23.0
+camelot-py[cv]>=0.11.0
+tabula-py>=2.9.0
+
+# Data processing
+pandas>=2.0.0
+numpy>=1.24.0
+
+# HTML generation
+jinja2>=3.1.0
+
+# Utilities
+python-dateutil>=2.8.0
+chardet>=5.0.0

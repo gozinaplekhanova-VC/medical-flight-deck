@@ -1,0 +1,4 @@
+date,test_name,value,unit,reference_min,reference_max,status,source_file
+2025-01-15,Белок,0,г/л,0,0.14,normal,example_urine.pdf
+2025-01-15,Глюкоза,0,ммоль/л,0,0,normal,example_urine.pdf
+2025-01-15,pH,6.0,,5.0,7.0,normal,example_urine.pdf

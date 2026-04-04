@@ -1,0 +1,6 @@
+date,test_name,value,unit,reference_min,reference_max,status,source_file
+2025-01-15,Гемоглобин,135,г/л,120,160,normal,example_cbc.pdf
+2025-01-15,Эритроциты,4.5,×10¹²/л,3.9,5.0,normal,example_cbc.pdf
+2025-01-15,Лейкоциты,6.2,×10⁹/л,4.0,9.0,normal,example_cbc.pdf
+2025-01-15,Тромбоциты,250,×10⁹/л,180,320,normal,example_cbc.pdf
+2025-01-15,СОЭ,8,мм/ч,2,15,normal,example_cbc.pdf

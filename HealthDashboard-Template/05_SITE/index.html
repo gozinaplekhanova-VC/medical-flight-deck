@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Medical Flight Deck</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    /* ── Brand tokens ───────────────────────────────── */
+    --color-aurora-lilac:     #7968B2;
+    --color-periwinkle-mist:  #8795BF;
+    --color-deep-indigo:      #5C63A6;
+    --color-mint-glow:        #6FCABD;
+    --color-frost-cyan:       #A1CDD2;
+    --color-seafoam-glass:    #B9E5D7;
+    --color-lemon-pulse:      #EAE7AB;
+    --color-electric-orchid:  #D06BF1;
+    --color-soft-violet-haze: #AFA5C0;
+    --color-dusty-stone:      #CBC6B8;
+    --color-cloud-lilac:      #D7D5F0;
+    --color-graphite-ink:     #262728;
+    --color-deep-graphite:    #4F5266;
+    --color-near-black:       #0E0E0D;
+
+    /* ── Surfaces ───────────────────────────────────── */
+    --surface-page:         #F4F6FA;
+    --surface-card:         #FFFFFF;
+    --surface-lilac-soft:   #F4F3F9;
+    --surface-mint-soft:    #F3FBFA;
+    --surface-blue-soft:    #F5F7FA;
+    --surface-orchid-soft:  #FBF3FE;
+    --surface-lemon-soft:   #FDFDF8;
+
+    /* ── Borders ────────────────────────────────────── */
+    --border-subtle:      #DCE3EC;
+    --border-soft:        #E8ECF2;
+    --border-accent-soft: #CFC9F0;
+
+    /* ── Text ───────────────────────────────────────── */
+    --text-primary:   #262728;
+    --text-secondary: #5C667A;
+    --text-tertiary:  #8A93A6;
+    --text-on-accent: #FFFFFF;
+
+    /* ── Interactive ────────────────────────────────── */
+    --focus-ring:   rgba(121,104,178,.28);
+    --hover-lilac:  rgba(121,104,178,.06);
+    --hover-mint:   rgba(111,202,189,.08);
+    --active-lilac: rgba(121,104,178,.12);
+
+    /* ── Gradients ──────────────────────────────────── */
+    --gradient-hero:       linear-gradient(135deg, #5C63A6 0%, #7968B2 45%, #8E63E8 100%);
+    --gradient-soft-shell: linear-gradient(135deg, #F4F3F9 0%, #EBF8F6 35%, #FCFCF3 62%, #ECEAF4 100%);
+
+    /* ── Medical status ─────────────────────────────── */
+    --status-normal:   #10b981;
+    --status-warning:  #f59e0b;
+    --status-danger:   #ef4444;
+    --status-critical: #991b1b;
+    --status-info:     #3b82f6;
+
+    /* ── Legacy vars (mapped to new palette) ────────── */
+    --bg:       #F4F6FA;
+    --bg-card:  #FFFFFF;
+    --bg-nav:   #FFFFFF;
+    --bg-th:    #F5F7FA;
+    --bg-sub:   #F5F7FA;
+    --bg-hover: #F4F3F9;
+    --bg-2:     #F4F3F9;
+    --text:     #262728;
+    --text-2:   #5C667A;
+    --text-3:   #8A93A6;
+    --text-4:   #A0AAB8;
+    --border:   #DCE3EC;
+    --border-2: #E8ECF2;
+    --shadow:   rgba(0,0,0,.07);
+  }
+  .dark {
+    --bg:       #0E0E0D;
+    --bg-card:  #1a1a2e;
+    --bg-nav:   #1a1a2e;
+    --bg-th:    #141428;
+    --bg-sub:   #141428;
+    --bg-hover: #222236;
+    --bg-2:     #1a1a2e;
+    --text:     #E8ECF2;
+    --text-2:   #A0AAB8;
+    --text-3:   #6B7385;
+    --text-4:   #4A5168;
+    --border:   #2a2a3e;
+    --border-2: #1E1E30;
+    --shadow:   rgba(0,0,0,.40);
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 14px; background: var(--bg); color: var(--text); line-height: 1.5;
+    transition: background .2s, color .2s;
+  }
+
+  .page-header {
+    background: var(--gradient-hero);
+    padding: 1.5rem 2rem 1.25rem;
+    color: #fff;
+  }
+  .page-header h1 {
+    font-size: 1.65rem; font-weight: 700; letter-spacing: -.02em;
+    margin-bottom: .15rem;
+  }
+  .page-header p { opacity: .85; font-size: .9rem; }
+
+  nav {
+    background: var(--bg-nav); border-bottom: 1px solid var(--border);
+    padding: 0 .75rem; display: flex; align-items: center; gap: .5rem;
+    position: sticky; top: 0; z-index: 10; flex-wrap: wrap;
+  }
+  .tab {
+    padding: 1rem 1.25rem; border: none; background: none; cursor: pointer;
+    color: var(--text-3); font-size: 1rem; font-weight: 600; border-bottom: 3px solid transparent;
+    white-space: nowrap; display: flex; align-items: center; gap: .5rem;
+  }
+  .tab:hover { color: var(--text); background: var(--bg-hover); }
+  .tab.active { color: var(--color-aurora-lilac); border-bottom-color: var(--color-aurora-lilac); }
+
+  #dark-btn {
+    margin-left: auto;
+    background: none; border: 1px solid var(--border);
+    border-radius: 8px; cursor: pointer; padding: .35rem .6rem;
+    font-size: 1rem; color: var(--text-3); line-height: 1;
+  }
+  #dark-btn:hover { background: var(--bg-hover); color: var(--text); }
+
+  .section { display: none; padding: 2rem; max-width: 1200px; margin: auto; }
+  .section.active { display: block; }
+
+  .card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px var(--shadow);
+  }
+  .card h2 { font-size: 1.2rem; margin-bottom: 1rem; color: var(--text); }
+  .card h3 { font-size: 1rem; margin-bottom: .75rem; color: var(--text-2); }
+
+  table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+  th { background: var(--bg-th); text-align: left; padding: .6rem .75rem; font-weight: 600; color: var(--text-2); }
+  td { padding: .6rem .75rem; border-bottom: 1px solid var(--border-2); }
+
+  .badge { font-size: .75rem; font-weight: 600; padding: .15rem .5rem; border-radius: 6px; }
+  .badge-normal { background: #d1fae5; color: #065f46; }
+  .badge-low { background: #fef3c7; color: #92400e; }
+  .badge-high { background: #fee2e2; color: #991b1b; }
+
+  .dark .badge-normal { background: #064e3b; color: #6ee7b7; }
+  .dark .badge-low { background: #78350f; color: #fde68a; }
+  .dark .badge-high { background: #7f1d1d; color: #fca5a5; }
+
+  .empty-state {
+    text-align: center; padding: 3rem; color: var(--text-3);
+  }
+  .empty-state p { font-size: 1.1rem; margin-bottom: .5rem; }
+  .empty-state small { font-size: .85rem; }
+
+  .mh-accordion details { margin-bottom: .75rem; }
+  .mh-accordion summary {
+    cursor: pointer; padding: .6rem .75rem; font-weight: 600;
+    background: var(--bg-th); border-radius: 8px; list-style: none;
+  }
+  .mh-accordion summary::-webkit-details-marker { display: none; }
+  .mh-accordion details[open] summary { border-radius: 8px 8px 0 0; }
+  .mh-accordion details > div { padding: .75rem; border: 1px solid var(--border-2); border-top: 0; border-radius: 0 0 8px 8px; }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <h1>Medical Flight Deck</h1>
+  <p>Your personal health dashboard — all data stays local</p>
+</header>
+
+<nav>
+  <button class="tab active" onclick="showTab('sec-ov')">Overview</button>
+  <button class="tab" onclick="showTab('sec-bg')">Blood (CBC)</button>
+  <button class="tab" onclick="showTab('sec-bb')">Biochemistry</button>
+  <button class="tab" onclick="showTab('sec-vit')">Vitamins</button>
+  <button class="tab" onclick="showTab('sec-hormones')">Hormones</button>
+  <button class="tab" onclick="showTab('sec-urine')">Urine</button>
+  <button class="tab" onclick="showTab('sec-meds')">Meds</button>
+  <button class="tab" onclick="showTab('sec-nutrition')">Nutrition</button>
+  <button class="tab" onclick="showTab('sec-mood')">Mood</button>
+  <button class="tab" onclick="showTab('sec-agents')">Reports</button>
+  <button class="tab" onclick="showTab('sec-consilium')">Consilium</button>
+  <button class="tab" onclick="showTab('sec-mh')">History</button>
+  <button id="dark-btn" onclick="document.documentElement.classList.toggle('dark')">&#9790;</button>
+</nav>
+
+<!-- ═══════════════════ OVERVIEW ═══════════════════ -->
+<div id="sec-ov" class="section active">
+  <div class="card">
+    <h2>Health Overview</h2>
+    <div class="empty-state">
+      <p>No data yet</p>
+      <small>Drop your medical PDFs into <code>00_INBOX_RAW/</code> and ask Claude to process them.</small>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ BLOOD GENERAL ═══════════════════ -->
+<div id="sec-bg" class="section">
+  <div class="card">
+    <h2>Complete Blood Count (CBC)</h2>
+    <div class="empty-state">
+      <p>No CBC data yet</p>
+      <small>Data will appear here after processing blood test PDFs.</small>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ BIOCHEMISTRY ═══════════════════ -->
+<div id="sec-bb" class="section">
+  <div class="card">
+    <h2>Blood Biochemistry</h2>
+    <div class="empty-state">
+      <p>No biochemistry data yet</p>
+      <small>Data will appear here after processing biochemistry PDFs.</small>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ VITAMINS ═══════════════════ -->
+<div id="sec-vit" class="section">
+  <div class="card">
+    <h2>Vitamins &amp; Micronutrients</h2>
+    <div class="empty-state">
+      <p>No vitamin data yet</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ HORMONES ═══════════════════ -->
+<div id="sec-hormones" class="section">
+  <div class="card">
+    <h2>Endocrinology</h2>
+    <div class="empty-state">
+      <p>No hormone data yet</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ URINE ═══════════════════ -->
+<div id="sec-urine" class="section">
+  <div class="card">
+    <h2>Urinalysis</h2>
+    <div class="empty-state">
+      <p>No urinalysis data yet</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ MEDICATIONS ═══════════════════ -->
+<div id="sec-meds" class="section">
+  <div class="card">
+    <h2>Medications &amp; Supplements</h2>
+    <div class="empty-state">
+      <p>No medication data yet</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ NUTRITION ═══════════════════ -->
+<div id="sec-nutrition" class="section">
+  <div class="card">
+    <h2>Nutrition Plans</h2>
+    <div class="empty-state">
+      <p>No meal plans yet</p>
+      <small>Create a request in <code>08_NUTRITION/requests/</code> and ask the nutritionist agent to generate a plan.</small>
+    </div>
+    <!-- Meal plans will be added here as <details> accordions -->
+  </div>
+</div>
+
+<!-- ═══════════════════ MOOD ═══════════════════ -->
+<div id="sec-mood" class="section">
+  <div class="card">
+    <h2>Mood Timeline</h2>
+    <div class="empty-state">
+      <p>No mood data yet</p>
+      <small>Export your Daylio data and run <code>parse_daylio.py</code> to populate this section.</small>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ AGENT REPORTS ═══════════════════ -->
+<div id="sec-agents" class="section">
+  <div class="card">
+    <h2>Specialist Reports</h2>
+    <div class="empty-state">
+      <p>No reports yet</p>
+      <small>Reports will appear here after running specialist agent consultations.</small>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ CONSILIUM ═══════════════════ -->
+<div id="sec-consilium" class="section">
+  <div class="card">
+    <h2>Consilium (Multi-Specialist Synthesis)</h2>
+    <div class="empty-state">
+      <p>No consilium sessions yet</p>
+      <small>Create a complaint file in <code>CLAUDE/prompts/complaints/</code> and ask Claude to run a consilium.</small>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ MEDICAL HISTORY ═══════════════════ -->
+<div id="sec-mh" class="section">
+  <div class="card">
+    <h2>Medical History</h2>
+    <div class="empty-state">
+      <p>Fill in your medical history</p>
+      <small>Edit the Markdown files in <code>06_MEDICAL_HISTORY/</code> to build your anamnesis.</small>
+    </div>
+  </div>
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+</script>
+
+</body>
+</html>

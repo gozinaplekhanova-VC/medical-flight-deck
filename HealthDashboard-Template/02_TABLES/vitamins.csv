@@ -1,0 +1,4 @@
+date,test_name,value,unit,reference_min,reference_max,status,source_file
+2025-01-15,Витамин D (25-OH),28,нг/мл,30,100,low,example_vitamins.pdf
+2025-01-15,Витамин B12,450,пг/мл,200,900,normal,example_vitamins.pdf
+2025-01-15,Ферритин,35,нг/мл,10,120,normal,example_vitamins.pdf

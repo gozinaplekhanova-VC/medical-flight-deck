@@ -1,0 +1,23 @@
+{
+  "_comment": "Maps canonical test names to CSV files, dashboard tabs, and display sections",
+  "tests": {
+    "Гемоглобин": {
+      "csv": "blood_general.csv",
+      "tab": "blood_general",
+      "section": "Общий анализ крови",
+      "aliases": ["Hb", "Hemoglobin"]
+    },
+    "ТТГ (TSH)": {
+      "csv": "hormones.csv",
+      "tab": "hormones",
+      "section": "Щитовидная железа",
+      "aliases": ["ТТГ", "TSH", "Тиреотропный гормон"]
+    },
+    "Витамин D (25-OH)": {
+      "csv": "vitamins.csv",
+      "tab": "vitamins",
+      "section": "Витамины",
+      "aliases": ["25-OH Vitamin D", "Витамин Д"]
+    }
+  }
+}

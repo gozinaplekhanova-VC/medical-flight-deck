@@ -1,0 +1,7 @@
+original_name,canonical_name,csv_file,tab,section
+Гемоглобин,Гемоглобин,blood_general.csv,blood_general,Общий анализ крови
+Hb,Гемоглобин,blood_general.csv,blood_general,Общий анализ крови
+Hemoglobin,Гемоглобин,blood_general.csv,blood_general,Общий анализ крови
+Глюкоза,Глюкоза,blood_biochemistry.csv,blood_biochemistry,Углеводный обмен
+ТТГ,ТТГ (TSH),hormones.csv,hormones,Щитовидная железа
+TSH,ТТГ (TSH),hormones.csv,hormones,Щитовидная железа

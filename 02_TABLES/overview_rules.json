@@ -1,0 +1,51 @@
+{
+  "_description": "Selection rules for the Overview tab (Главное сейчас). Defines what qualifies for each cluster card and card type.",
+  "_updated": "2026-03-27",
+
+  "card_types": {
+    "active_issue":      "Confirmed, current abnormality requiring action or active clinical follow-up.",
+    "monitor":           "Persistent abnormality, stable — watch for change but no immediate action needed.",
+    "improving":         "Was abnormal, now trending toward normal — document progress.",
+    "background_risk":   "Genetic marker or historical finding with no current clinical significance.",
+    "pending_check":     "Test result overdue or not yet obtained — gap in monitoring."
+  },
+
+  "status_pills": {
+    "t-urgent":   "Actively worsening or newly detected — needs action soon.",
+    "t-active":   "Stable but flagged as active issue — keep visible.",
+    "t-watch":    "Stable for ≥2 measurements — monitoring only.",
+    "t-check":    "Pending verification or retest.",
+    "t-improving":"Trend clearly improving over ≥2 measurements."
+  },
+
+  "type_badges": {
+    "ot-issue":   "активный вопрос — red badge",
+    "ot-monitor": "под мониторингом — amber badge",
+    "ot-check":   "требует проверки — blue badge"
+  },
+
+  "inclusion_rules": {
+    "must_include": [
+      "Any parameter with status=critical or status=strong in CHARTS (latest value)",
+      "Any cluster where ≥2 related abnormalities are grouped",
+      "Any infection marker confirmed by culture or PCR in last 12 months"
+    ],
+    "may_include": [
+      "Moderate abnormalities (status=moderate) if clinically linked to active cluster",
+      "Genetic markers only as ov-note background_risk — never as ov-abn-row"
+    ],
+    "exclude": [
+      "Normalized values (previously abnormal, now within range for ≥2 measurements)",
+      "Duplicate representation of same finding across clusters",
+      "Historical one-time anomalies without recurrence"
+    ]
+  },
+
+  "clusters": {
+    "cl-red":    "Critical/urgent — active issue worsening",
+    "cl-orange": "High concern — persistent immune/inflammatory pattern",
+    "cl-amber":  "Moderate concern — metabolic or lipid issue",
+    "cl-slate":  "Mixed/infectious markers — monitoring",
+    "cl-teal":   "GI/microbiome — specialist referral needed"
+  }
+}
