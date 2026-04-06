@@ -220,14 +220,31 @@ Open `05_SITE/index.html` in any browser. No server needed.
 
 ## Adapting for your own use
 
-The `HealthDashboard-Template/` folder contains a clean copy of the project structure with example files but no personal data. To start fresh:
+The `HealthDashboard-Template/` folder contains a clean copy of the project structure with no personal data. The dashboard has the full design with all 28 sections, onboarding instructions, dark mode, search — but all sections are empty, waiting for your data. To start fresh:
 
 1. Copy `HealthDashboard-Template/` and rename it
-2. Fill in your medical history files in `06_MEDICAL_HISTORY/`
-3. Customize agent prompts in `CLAUDE/agents/` if needed (e.g., change language, adjust specialties)
-4. Start dropping PDFs into `00_INBOX_RAW/`
+2. Open `05_SITE/index.html` in your browser — you'll see the onboarding guide
+3. Open Claude (Cowork → select folder, or `claude` in terminal)
+4. Drop your medical PDFs into `00_INBOX_RAW/`
+5. Ask Claude: *"Process files from INBOX: sort, extract, normalize, update dashboard"*
+6. Refresh the browser — your data will appear in the corresponding tabs
 
-The system will build up your data over time as you add documents and run analyses.
+Fill in your medical history in `06_MEDICAL_HISTORY/` and customize agent prompts in `CLAUDE/agents/` as needed.
+
+
+## Using the dashboard
+
+The dashboard has a tab-based navigation:
+
+- **Обзор** — health snapshot with key markers and status rings
+- **Анализы** — lab data (CBC, biochemistry, vitamins, hormones, urinalysis, coagulation) with time-series tables and charts
+- **Образ жизни** — medications, supplements, nutrition plans, exercise, mood tracking
+- **Анамнез** — medical history by specialty (cardiology, gastro, gynecology, neurology, etc.) and genetics
+- **Корреляции** — data-driven connections between markers, found by the correlator agent
+- **Отчёты агентов** — individual specialist analyses and consilium syntheses
+- **Врачу** — generated questions and recommended tests for your next doctor visit
+
+Status colors: green (normal), amber (warning), red (danger), dark red (critical). Use 🔍 (⌘K) for quick search across all data. Toggle dark mode with 🌙.
 
 
 ## Privacy
@@ -237,45 +254,24 @@ This project is designed for **local-only** use. No data is sent to cloud storag
 The `.gitignore` excludes all personal data folders from version control. The template folder contains only structure and examples.
 
 
-## generate_dashboard.py — НЕ ЗАПУСКАТЬ
+## Adding new data
 
-В папке `scripts/` есть файл `generate_dashboard.py`. Он содержит устаревший HTML-шаблон, который **перезапишет рабочий дашборд** если его запустить.
+1. Drop your PDF lab results into `00_INBOX_RAW/`
+2. Open Claude: `cd ~/HealthDashboard && claude` (or Cowork → select folder)
+3. Say: *"Process files from INBOX: sort, extract, normalize, add to tables, update dashboard"*
 
-**Правило:** все изменения дизайна, данных и структуры — только через прямое редактирование `05_SITE/index.html`. Через Claude Code, Cowork или вручную.
+## Running a consilium
 
-Если вы используете Claude Code — это правило уже прописано в `CLAUDE.md`, и агент его знает. Но на всякий случай:
+1. Create a complaint file in `CLAUDE/prompts/complaints/YYYY-MM-DD_topic.md`
+2. Describe your symptoms, question, and context
+3. Say to Claude: *"Run a consilium based on the latest complaint"*
+4. Results appear in `04_ADVISOR_SUMMARY/` and can be added to the dashboard
 
-```
-⛔ python3 scripts/generate_dashboard.py   ← НЕ ДЕЛАТЬ
-✅ Редактировать index.html напрямую       ← ПРАВИЛЬНО
-```
+## Warning: generate_dashboard.py
 
-## Если дашборд сломался
+The file `scripts/generate_dashboard.py` contains a legacy HTML template. **Do not run it** — it will overwrite the dashboard with an old layout. All dashboard updates should be done by directly editing `05_SITE/index.html`. This rule is already in `CLAUDE.md`, so Claude knows it automatically.
 
-В папке `05_SITE/` могут лежать бекапы:
-- `index_backup_before_colors.html`
-- `index_backup_before_references.html`
-
-Для восстановления:
-```bash
-cp 05_SITE/index_backup_before_colors.html 05_SITE/index.html
-```
-
-## Как добавлять новые данные
-
-1. Положите PDF с анализами в `00_INBOX_RAW/`
-2. Откройте Claude Code: `cd ~/HealthDashboard && claude`
-3. Скажите: *«Обработай файлы из INBOX: отсортируй, извлеки данные, добавь в таблицы. Обнови данные в index.html. Не запускай generate_dashboard.py.»*
-
-## Как запустить консилиум
-
-1. Создайте файл жалобы в `CLAUDE/prompts/complaints/YYYY-MM-DD_тема.md`
-2. Скажите Claude Code: *«Проведи консилиум на основе последней жалобы. Не трогай index.html.»*
-3. Результаты появятся в `04_ADVISOR_SUMMARY/`
-
-## Для разработчиков: если хотите починить generate_dashboard.py
-
-Нужно заменить `HTML_TEMPLATE` внутри скрипта на содержимое текущего рабочего `index.html`, с плейсхолдерами `__DATA_JSON__` и `__LAST_UPDATED__` вместо реальных данных. Тогда скрипт будет генерировать дашборд на основе рабочего шаблона, а не устаревшего.
+The template folder (`HealthDashboard-Template/`) does not include this script.
 
 
 ## Disclaimer
